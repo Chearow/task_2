@@ -9,12 +9,12 @@ class m251203_021608_create_post_table extends Migration
     {
         $this->createTable('{{%post}}', [
             'id' => $this->primaryKey(),
-            'title' => $this->string()->notNull(),
-            'content' => $this->text()->notNull(),
-            'author_id' => $this->integer()->notNull(),
-            'category_id' => $this->integer()->notNull(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'title' => $this->string(),
+            'content' => $this->text(),
+            'author_id' => $this->integer(),
+            'category_id' => $this->integer(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ]);
 
         $this->createIndex(

@@ -14,11 +14,11 @@ class m251203_021630_create_comment_table extends Migration
     {
         $this->createTable('{{%comment}}', [
             'id' => $this->primaryKey(),
-            'post_id' => $this->integer()->notNull(),
-            'author_id' => $this->integer()->notNull(),
-            'content' => $this->text()->notNull(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'post_id' => $this->integer(),
+            'author_id' => $this->integer(),
+            'content' => $this->text(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ]);
 
         $this->createIndex('idx-comment-post_id', '{{%comment}}', 'post_id');
