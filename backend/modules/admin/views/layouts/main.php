@@ -40,20 +40,22 @@ AppAsset::register($this);
             ['label' => 'Categories', 'url' => ['/admin/category/index']],
             ['label' => 'Comments', 'url' => ['/admin/comment/index']],
         ];
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-            'items' => $menuItems,
-        ]);
         if (Yii::$app->user->isGuest) {
-            echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
         } else {
-            echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
+            $menuItems[] = '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout text-decoration-none']
+                    ['class' => 'nav-link btn btn-link logout text-decoration-none']
                 )
-                . Html::endForm();
+                . Html::endForm()
+                . '</li>';
         }
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav ms-auto'],
+            'items' => $menuItems,
+        ]);
         NavBar::end();
         ?>
     </header>

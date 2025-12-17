@@ -22,7 +22,6 @@ use Yii;
 class Post extends \yii\db\ActiveRecord
 {
 
-
     /**
      * {@inheritdoc}
      */
@@ -63,43 +62,29 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Category]].
-     *
-     * @return \yii\db\ActiveQuery|PostQuery
-     */
-    public function getCategory()
+    public function saveImage($filename): bool
     {
-        return $this->hasOne(Category::class, ['id' => 'category_id']);
+        $this->image = $filename;
+        return $this->save(false);
     }
 
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return \yii\db\ActiveQuery|PostQuery
-     */
-    public function getComments()
+    public function getImage()
     {
-        return $this->hasMany(Comment::class, ['post_id' => 'id']);
+        if (!empty($this->image)) {
+            return Yii::getAlias('@frontendUrl') . '/uploads/' . $this->image;
+        }
+        return Yii::getAlias('@frontendUrl') . '/placeholders/no-image.png';
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-     */
-    public function getUser()
+    public function deleteImage()
     {
-        return $this->hasOne(User::class, ['id' => 'author_id']);
+        $imageUploadModel = new ImageUpload();
+        $imageUploadModel->deleteCurrentImage($this->image);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return PostQuery the active query used by this AR class.
-     */
-    public static function find()
+    public function beforeDelete()
     {
-        return new PostQuery(get_called_class());
+        $this->deleteImage();
+        return parent::beforeDelete();
     }
-
 }
