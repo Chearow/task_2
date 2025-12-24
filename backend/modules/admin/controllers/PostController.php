@@ -2,10 +2,12 @@
 
 namespace backend\modules\admin\controllers;
 
+use common\models\Category;
 use common\models\ImageUpload;
 use common\models\Post;
 use common\models\PostSearch;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -152,5 +154,28 @@ class PostController extends Controller
         }
 
         return $this->render('image', ['model' => $model]);
+    }
+
+    public function actionSetCategory($id)
+    {
+        $post = $this->findModel($id);
+        $selectedCategory = $post->category->id ?? null;
+        $categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
+
+        if(Yii::$app->request->isPost)
+        {
+            $category = Yii::$app->request->post('category');
+            if(true)
+            {
+                return $this->redirect(['view', 'id' => $post->id]);
+            }
+        }
+
+
+        return $this->render('category', [
+            'model' => $post,
+            'selectedCategory' => $selectedCategory,
+            'categories' => $categories
+        ]);
     }
 }

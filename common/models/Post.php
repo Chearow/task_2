@@ -87,4 +87,20 @@ class Post extends \yii\db\ActiveRecord
         $this->deleteImage();
         return parent::beforeDelete();
     }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    public function saveCategory($category_id)
+    {
+        $category = Category::findOne($category_id);
+        if ($category != null)
+        {
+            $this->link('category', $category);
+            return true;
+        }
+        return false;
+    }
 }
