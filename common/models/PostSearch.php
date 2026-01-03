@@ -11,6 +11,7 @@ use common\models\Post;
  */
 class PostSearch extends Post
 {
+    public $tagIds;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class PostSearch extends Post
     {
         return [
             [['id', 'author_id', 'category_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'content'], 'safe'],
+            [['title', 'content', 'tagIds'], 'safe'],
         ];
     }
 

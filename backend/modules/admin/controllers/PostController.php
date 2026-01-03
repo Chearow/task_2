@@ -6,6 +6,7 @@ use common\models\Category;
 use common\models\ImageUpload;
 use common\models\Post;
 use common\models\PostSearch;
+use common\models\Tag;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -184,6 +185,20 @@ class PostController extends Controller
     public function actionSetTags($id)
     {
         $post = $this->findModel($id);
-        var_dump($post->title);
+        $selectedTags = $post->getSelectedTags(); //
+        $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
+
+        if(Yii::$app->request->isPost)
+        {
+            $tags = Yii::$app->request->post('tags');
+            $post->saveTags($tags);
+            return $this->redirect(['view', 'id' => $post->id]);
+        }
+
+        return $this->render('tags', [
+            'selectedTags' => $selectedTags,
+            'tags' => $tags
+        ]);
     }
+
 }

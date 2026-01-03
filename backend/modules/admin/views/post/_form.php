@@ -22,12 +22,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
     <?= $form->field($model, 'tagIds')->checkboxList(
-            ArrayHelper::map(Tag::find()->all(), 'id', 'title'),
+            ArrayHelper::map(Tag::find()->all(), 'id', 'title')
     ) ?>
 
     <div class="form-group">

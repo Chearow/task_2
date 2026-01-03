@@ -17,7 +17,15 @@ use Yii;
  */
 class Tag extends \yii\db\ActiveRecord
 {
-
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::class,
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -33,7 +41,6 @@ class Tag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'default', 'value' => null],
             [['title'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
