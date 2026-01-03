@@ -88,4 +88,15 @@ class Comment extends \yii\db\ActiveRecord
         return new PostQuery(get_called_class());
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::class,
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
+
 }

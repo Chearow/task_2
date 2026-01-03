@@ -43,8 +43,11 @@ class Post extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 255],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['author_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            ['tagIds', 'each', 'rule' => ['integer']],
         ];
     }
+
+    public $tagIds = [];
 
     /**
      * {@inheritdoc}
@@ -103,4 +106,43 @@ class Post extends \yii\db\ActiveRecord
         }
         return false;
     }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::class,
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
+    public function getPostTags()
+    {
+        return $this->hasMany(PostTag::class, ['post_id' => 'id']);
+    }
+
+    public function getTags()
+    {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+            ->via('postTags');
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        PostTag::deleteAll(['post_id' => $this->id]);
+
+        if (is_array($this->tagIds))
+        {
+            foreach ($this->tagIds as $tagId)
+            {
+                $pt = new PostTag();
+                $pt->post_id = $this->id;
+                $pt->tag_id = $tagId;
+                $pt->save();
+            }
+        }
+    }
+
 }

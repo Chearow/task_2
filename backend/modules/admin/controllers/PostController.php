@@ -98,6 +98,8 @@ class PostController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->tagIds = \yii\helpers\ArrayHelper::getColumn($model->tags, 'id');
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -177,5 +179,11 @@ class PostController extends Controller
             'selectedCategory' => $selectedCategory,
             'categories' => $categories
         ]);
+    }
+
+    public function actionSetTags($id)
+    {
+        $post = $this->findModel($id);
+        var_dump($post->title);
     }
 }
