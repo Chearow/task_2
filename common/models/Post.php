@@ -170,4 +170,9 @@ class Post extends \yii\db\ActiveRecord
         PostTag::deleteAll(['post_id' => $this->id]);
     }
 
+    public function getComments()
+    {
+        return $this->hasMany(Comment::class, ['post_id' => 'id']);
+    }
+
 }

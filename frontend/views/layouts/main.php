@@ -7,6 +7,8 @@ use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
+use yii\bootstrap5\Nav;
+use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 ?>
@@ -24,11 +26,10 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light main-menu">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <div class="container">
-
-            <a class="navbar-brand" href="<?= \yii\helpers\Url::to(['site/index']) ?>">
-                <img src="/public/images/logo.jpg" alt="">
+            <a class="navbar-brand fw-bold" href="<?= \yii\helpers\Url::to(['/site/index']) ?>">
+                Pixel Paradise
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -39,15 +40,25 @@ AppAsset::register($this);
 
             <div class="collapse navbar-collapse" id="mainNavbar">
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
+                <ul class="navbar-nav mb-2 mb-lg-0 text-uppercase small">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= \yii\helpers\Url::to(['site/index']) ?>">Home</a>
+                        <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/index']) ?>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= \yii\helpers\Url::to(['/post/index']) ?>">Posts</a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav mb-2 mb-lg-0 text-uppercase">
-                    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+                <ul class="navbar-nav mb-2 mb-lg-0 text-uppercase small">
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/login']) ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/signup']) ?>">Register</a></li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/logout']) ?>"
+                               data-method="post">Logout (<?= Yii::$app->user->identity->username ?>)</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
             </div>
@@ -58,7 +69,7 @@ AppAsset::register($this);
 <main role="main" class="flex-shrink-0">
     <div class="container">
         <?= Breadcrumbs::widget([
-            'links' => $this->params['breadcrumbs'] ?? [],
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>

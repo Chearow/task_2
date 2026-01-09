@@ -52,6 +52,8 @@ return [
                 'signup' => 'site/signup',
                 'request-password-reset' => 'site/request-password-reset',
                 'reset-password' => 'site/reset-password',
+                'posts' => 'post/index',
+                'posts/<id:\d+>' => 'post/view',
             ],
         ],
 
