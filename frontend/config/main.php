@@ -40,7 +40,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
+            'enableStrictParsing' => false,
             'rules' => [
                 '/' => 'site/index',
                 'paradise|pixel' => 'site/paradise',
@@ -54,6 +54,8 @@ return [
                 'reset-password' => 'site/reset-password',
                 'posts' => 'post/index',
                 'posts/<id:\d+>' => 'post/view',
+
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
 

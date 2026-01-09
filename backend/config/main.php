@@ -51,6 +51,8 @@ return [
                 'login' => 'site/login',
                 'error' => 'site/error',
                 'logout' => 'site/logout',
+
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
 

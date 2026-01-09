@@ -35,11 +35,14 @@ AppAsset::register($this);
             ],
         ]);
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/admin/default/index']],
-            ['label' => 'Posts', 'url' => ['/admin/post/index']],
-            ['label' => 'Categories', 'url' => ['/admin/category/index']],
-            ['label' => 'Comments', 'url' => ['/admin/comment/index']],
+            ['label' => 'Blog', 'items' => [
+                ['label' => 'Posts', 'url' => ['/admin/post']],
+                ['label' => 'Categories', 'url' => ['/admin/category']],
+                ['label' => 'Tags', 'url' => ['/admin/tag']],
+                ['label' => 'Comments', 'url' => ['/admin/comment']],
+            ]]
         ];
+
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
         } else {
