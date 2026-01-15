@@ -45,6 +45,10 @@ class m251227_004049_create_post_tag_table extends Migration
      */
     public function safeDown(): void
     {
+        $this->dropForeignKey('fk_post_tag_post_id', '{{%post_tag}}');
+        $this->dropForeignKey('fk_post_tag_tag_id', '{{%post_tag}}');
+        $this->dropPrimaryKey('pk_post_tag', '{{%post_tag}}');
+
         $this->dropTable('{{%post_tag}}');
     }
 }
