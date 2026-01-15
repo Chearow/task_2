@@ -17,6 +17,23 @@ use Yii;
  */
 class Tag extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'tag';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return TagQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new TagQuery(get_called_class());
+    }
+
     public function behaviors()
     {
         return [
@@ -25,14 +42,6 @@ class Tag extends \yii\db\ActiveRecord
                 'value' => new \yii\db\Expression('NOW()'),
             ],
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'tag';
     }
 
     /**
@@ -79,15 +88,6 @@ class Tag extends \yii\db\ActiveRecord
     public function getPosts()
     {
         return $this->hasMany(Post::class, ['id' => 'post_id'])->via('postTags');
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return TagQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new TagQuery(get_called_class());
     }
 
 }

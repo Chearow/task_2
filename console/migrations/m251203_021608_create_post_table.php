@@ -18,7 +18,10 @@ class m251203_021608_create_post_table extends Migration
         ]);
 
         $this->createIndex(
-            'idx_post_author_id', '{{%post}}', 'author_id');
+            'idx_post_author_id',
+            '{{%post}}',
+            'author_id'
+        );
         $this->addForeignKey(
             'fk_post_author',
             '{{%post}}',

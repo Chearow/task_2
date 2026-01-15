@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 
 /** @var $model \common\models\Post */
@@ -11,11 +12,13 @@ use yii\helpers\Url;
         </a>
     </h2>
 
-    <?php if ($model->image): ?>
-    <p>
-        <img src="uploads/<?= $model->image ?>" class="img-fluid" alt=""
-    </p>
-    <?php endif; ?>
+    <?php
+    if ($model->image): ?>
+        <p>
+            <img src="uploads/<?= $model->image ?>" class="img-fluid" alt=""
+        </p>
+    <?php
+    endif; ?>
 
     <p><?= $model->content ?></p>
 
@@ -26,8 +29,10 @@ use yii\helpers\Url;
 
     <p>
         <strong>Теги:</strong>
-        <?php foreach ($model->tags as $tag): ?>
+        <?php
+        foreach ($model->tags as $tag): ?>
             <span class="badge bg-secondary"><?= $tag->title ?></span>
-        <?php endforeach; ?>
+        <?php
+        endforeach; ?>
     </p>
 </div>

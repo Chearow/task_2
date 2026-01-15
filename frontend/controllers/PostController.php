@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use common\models\Post;
 use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class PostController extends Controller
 {

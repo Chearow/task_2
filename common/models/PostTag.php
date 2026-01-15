@@ -27,6 +27,15 @@ class PostTag extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
+     * @return PostTagQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PostTagQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -34,8 +43,20 @@ class PostTag extends \yii\db\ActiveRecord
             [['post_id', 'tag_id'], 'required'],
             [['post_id', 'tag_id'], 'integer'],
             [['post_id', 'tag_id'], 'unique', 'targetAttribute' => ['post_id', 'tag_id']],
-            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::class, 'targetAttribute' => ['post_id' => 'id']],
-            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::class, 'targetAttribute' => ['tag_id' => 'id']],
+            [
+                ['post_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Post::class,
+                'targetAttribute' => ['post_id' => 'id']
+            ],
+            [
+                ['tag_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Tag::class,
+                'targetAttribute' => ['tag_id' => 'id']
+            ],
         ];
     }
 
@@ -68,15 +89,6 @@ class PostTag extends \yii\db\ActiveRecord
     public function getTag()
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return PostTagQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostTagQuery(get_called_class());
     }
 
 }

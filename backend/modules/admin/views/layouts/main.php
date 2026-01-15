@@ -1,6 +1,7 @@
 <?php
 
 /** @var \yii\web\View $this */
+
 /** @var string $content */
 
 use backend\assets\AppAsset;
@@ -12,18 +13,22 @@ use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
+<?php
+$this->beginPage() ?>
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>" class="h-100">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php $this->registerCsrfMetaTags() ?>
+        <?php
+        $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
+        <?php
+        $this->head() ?>
     </head>
     <body class="d-flex flex-column h-100">
-    <?php $this->beginBody() ?>
+    <?php
+    $this->beginBody() ?>
 
     <header>
         <?php
@@ -35,12 +40,15 @@ AppAsset::register($this);
             ],
         ]);
         $menuItems = [
-            ['label' => 'Blog', 'items' => [
-                ['label' => 'Posts', 'url' => ['/admin/post']],
-                ['label' => 'Categories', 'url' => ['/admin/category']],
-                ['label' => 'Tags', 'url' => ['/admin/tag']],
-                ['label' => 'Comments', 'url' => ['/admin/comment']],
-            ]]
+            [
+                'label' => 'Blog',
+                'items' => [
+                    ['label' => 'Posts', 'url' => ['/admin/post']],
+                    ['label' => 'Categories', 'url' => ['/admin/category']],
+                    ['label' => 'Tags', 'url' => ['/admin/tag']],
+                    ['label' => 'Comments', 'url' => ['/admin/comment']],
+                ]
+            ]
         ];
 
         if (Yii::$app->user->isGuest) {
@@ -80,8 +88,10 @@ AppAsset::register($this);
         </div>
     </footer>
 
-    <?php $this->endBody() ?>
+    <?php
+    $this->endBody() ?>
     </body>
     </html>
-<?php $this->endPage();
+<?php
+$this->endPage();
 

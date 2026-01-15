@@ -8,10 +8,10 @@ use common\models\Post;
 use common\models\PostSearch;
 use common\models\Tag;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -64,6 +64,22 @@ class PostController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    /**
+     * Finds the Post model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Post the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Post::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -124,36 +140,17 @@ class PostController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Post model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Post the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Post::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
     public function actionSetImage($id)
     {
-        $model = new ImageUpload;
+        $model = new ImageUpload();
 
-        if (Yii::$app->request->isPost)
-        {
+        if (Yii::$app->request->isPost) {
             $post = $this->findModel($id);
             $file = UploadedFile::getInstance($model, 'image');
 
-            if($post->saveImage($model->uploadFile($file, $post->image)))
-            {
+            if ($post->saveImage($model->uploadFile($file, $post->image))) {
                 return $this->redirect(['view', 'id' => $post->id]);
             }
-
         }
 
         return $this->render('image', ['model' => $model]);
@@ -165,13 +162,14 @@ class PostController extends Controller
         $selectedCategory = $post->category->id ?? null;
         $categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
 
-        if(Yii::$app->request->isPost)
-        {
-            $category = Yii::$app->request->post('category');
-            if(true)
-            {
-                return $this->redirect(['view', 'id' => $post->id]);
+        if (Yii::$app->request->isPost) {
+            $categoryId = Yii::$app->request->post('category');
+
+            if ($categoryId) {
+                $post->category_id = $categoryId;
+                $post->save(false);
             }
+            return $this->redirect(['view', 'id' => $post->id]);
         }
 
 
@@ -185,11 +183,10 @@ class PostController extends Controller
     public function actionSetTags($id)
     {
         $post = $this->findModel($id);
-        $selectedTags = $post->getSelectedTags(); //
+        $selectedTags = $post->getSelectedTags();
         $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
 
-        if(Yii::$app->request->isPost)
-        {
+        if (Yii::$app->request->isPost) {
             $tags = Yii::$app->request->post('tags');
             $post->saveTags($tags);
             return $this->redirect(['view', 'id' => $post->id]);

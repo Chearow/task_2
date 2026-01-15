@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "category".
  *
@@ -25,6 +23,15 @@ class Category extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'category';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return PostQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PostQuery(get_called_class());
     }
 
     /**
@@ -64,15 +71,6 @@ class Category extends \yii\db\ActiveRecord
     public function getPosts()
     {
         return $this->hasMany(Post::class, ['category_id' => 'id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return PostQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostQuery(get_called_class());
     }
 
     public function behaviors()

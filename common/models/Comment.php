@@ -31,6 +31,15 @@ class Comment extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
+     * @return PostQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PostQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -39,8 +48,20 @@ class Comment extends \yii\db\ActiveRecord
             [['post_id', 'author_id'], 'integer'],
             [['content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['author_id' => 'id']],
-            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::class, 'targetAttribute' => ['post_id' => 'id']],
+            [
+                ['author_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['author_id' => 'id']
+            ],
+            [
+                ['post_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Post::class,
+                'targetAttribute' => ['post_id' => 'id']
+            ],
         ];
     }
 
@@ -77,15 +98,6 @@ class Comment extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return PostQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostQuery(get_called_class());
     }
 
     public function behaviors()

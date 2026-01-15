@@ -12,14 +12,16 @@ use yii\widgets\ActiveForm;
 
 <div class="post-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin(); ?>
 
-    <?= Html::dropDownList('category', $selectedCategory, $categories, ['class'=>'form-control']) ?>
+    <?= Html::dropDownList('category', $selectedCategory, $categories, ['class' => 'form-control']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Загрузить', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php
+    ActiveForm::end(); ?>
 
 </div>

@@ -43,8 +43,20 @@ class Post extends \yii\db\ActiveRecord
             [['author_id', 'category_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['author_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [
+                ['author_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['author_id' => 'id']
+            ],
+            [
+                ['category_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::class,
+                'targetAttribute' => ['category_id' => 'id']
+            ],
             ['tagIds', 'each', 'rule' => ['integer']],
         ];
     }
@@ -79,16 +91,16 @@ class Post extends \yii\db\ActiveRecord
         return Yii::getAlias('@frontendUrl') . '/placeholders/no-image.png';
     }
 
-    public function deleteImage()
-    {
-        $imageUploadModel = new ImageUpload();
-        $imageUploadModel->deleteCurrentImage($this->image);
-    }
-
     public function beforeDelete()
     {
         $this->deleteImage();
         return parent::beforeDelete();
+    }
+
+    public function deleteImage()
+    {
+        $imageUploadModel = new ImageUpload();
+        $imageUploadModel->deleteCurrentImage($this->image);
     }
 
     public function getCategory()
@@ -99,8 +111,7 @@ class Post extends \yii\db\ActiveRecord
     public function saveCategory($category_id)
     {
         $category = Category::findOne($category_id);
-        if ($category != null)
-        {
+        if ($category != null) {
             $this->link('category', $category);
             return true;
         }
@@ -122,21 +133,13 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(PostTag::class, ['post_id' => 'id']);
     }
 
-    public function getTags()
-    {
-        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-            ->via('postTags');
-    }
-
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
         PostTag::deleteAll(['post_id' => $this->id]);
 
-        if (is_array($this->tagIds))
-        {
-            foreach ($this->tagIds as $tagId)
-            {
+        if (is_array($this->tagIds)) {
+            foreach ($this->tagIds as $tagId) {
                 $pt = new PostTag();
                 $pt->post_id = $this->id;
                 $pt->tag_id = $tagId;
@@ -151,14 +154,18 @@ class Post extends \yii\db\ActiveRecord
         return ArrayHelper::getColumn($selectedIds, 'id');
     }
 
+    public function getTags()
+    {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+            ->via('postTags');
+    }
+
     public function saveTags($tags)
     {
-        if (is_array($tags))
-        {
+        if (is_array($tags)) {
             $this->clearCurrentTags();
 
-            foreach ($tags as $tag_id)
-            {
+            foreach ($tags as $tag_id) {
                 $tag = Tag::findOne($tag_id);
                 $this->link('tags', $tag);
             }
