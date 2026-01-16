@@ -17,21 +17,9 @@ use Yii;
  */
 class Tag extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'tag';
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return TagQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new TagQuery(get_called_class());
     }
 
     public function behaviors()
@@ -44,9 +32,6 @@ class Tag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -57,9 +42,6 @@ class Tag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -70,21 +52,11 @@ class Tag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[PostTags]].
-     *
-     * @return \yii\db\ActiveQuery|PostTagQuery
-     */
     public function getPostTags()
     {
         return $this->hasMany(PostTag::class, ['tag_id' => 'id']);
     }
 
-    /**
-     * Gets query for [[Posts]].
-     *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-     */
     public function getPosts()
     {
         return $this->hasMany(Post::class, ['id' => 'post_id'])->via('postTags');

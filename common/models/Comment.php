@@ -19,28 +19,11 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
-
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'comment';
     }
 
-    /**
-     * {@inheritdoc}
-     * @return PostQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostQuery(get_called_class());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -65,9 +48,6 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -80,21 +60,11 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Post]].
-     *
-     * @return \yii\db\ActiveQuery|PostQuery
-     */
     public function getPost()
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);

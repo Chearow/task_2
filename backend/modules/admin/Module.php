@@ -7,15 +7,9 @@ namespace backend\modules\admin;
  */
 class Module extends \yii\base\Module
 {
-    /**
-     * {@inheritdoc}
-     */
     public $layout = 'main.php';
     public $controllerNamespace = 'backend\modules\admin\controllers';
 
-    /**
-     * {@inheritdoc}
-     */
     public function init()
     {
         parent::init();

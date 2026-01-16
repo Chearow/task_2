@@ -7,9 +7,6 @@ use yii\db\Migration;
  */
 class m251203_021630_create_comment_table extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp(): void
     {
         $this->createTable('{{%comment}}', [
@@ -45,9 +42,6 @@ class m251203_021630_create_comment_table extends Migration
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown(): void
     {
         $this->dropForeignKey('fk-comment-post', '{{%comment}}');

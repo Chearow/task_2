@@ -13,9 +13,6 @@ use yii\web\NotFoundHttpException;
  */
 class CommentController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +28,6 @@ class CommentController extends Controller
         );
     }
 
-    /**
-     * Lists all Comment models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new CommentSearch();
@@ -47,12 +39,6 @@ class CommentController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Comment model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,13 +46,6 @@ class CommentController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Comment model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Comment the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Comment::findOne(['id' => $id])) !== null) {
@@ -76,11 +55,6 @@ class CommentController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    /**
-     * Creates a new Comment model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Comment();
@@ -98,13 +72,6 @@ class CommentController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Comment model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -118,13 +85,6 @@ class CommentController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Comment model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();

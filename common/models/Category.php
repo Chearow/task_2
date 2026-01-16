@@ -15,28 +15,11 @@ namespace common\models;
  */
 class Category extends \yii\db\ActiveRecord
 {
-
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'category';
     }
 
-    /**
-     * {@inheritdoc}
-     * @return PostQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostQuery(get_called_class());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -49,9 +32,6 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -63,11 +43,6 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Posts]].
-     *
-     * @return \yii\db\ActiveQuery|PostQuery
-     */
     public function getPosts()
     {
         return $this->hasMany(Post::class, ['category_id' => 'id']);

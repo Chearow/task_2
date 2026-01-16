@@ -4,7 +4,6 @@ use yii\db\Migration;
 
 class m251203_021608_create_post_table extends Migration
 {
-
     public function safeUp(): void
     {
         $this->createTable('{{%post}}', [
@@ -44,9 +43,6 @@ class m251203_021608_create_post_table extends Migration
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown(): void
     {
         $this->dropForeignKey('fk_post_author', '{{%post}}');

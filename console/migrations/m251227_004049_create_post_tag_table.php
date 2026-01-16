@@ -7,9 +7,6 @@ use yii\db\Migration;
  */
 class m251227_004049_create_post_tag_table extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp(): void
     {
         $this->createTable('{{%post_tag}}', [
@@ -40,9 +37,6 @@ class m251227_004049_create_post_tag_table extends Migration
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown(): void
     {
         $this->dropForeignKey('fk_post_tag_post_id', '{{%post_tag}}');

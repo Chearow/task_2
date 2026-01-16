@@ -24,17 +24,11 @@ class Post extends \yii\db\ActiveRecord
 {
     public $tagIds = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'post';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -61,9 +55,6 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

@@ -7,9 +7,6 @@ use yii\db\Migration;
  */
 class m251203_021600_create_category_table extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp(): void
     {
         $this->createTable('{{%category}}', [
@@ -21,9 +18,6 @@ class m251203_021600_create_category_table extends Migration
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown(): void
     {
         $this->dropTable('{{%category}}');

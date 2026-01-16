@@ -15,28 +15,11 @@ use Yii;
  */
 class PostTag extends \yii\db\ActiveRecord
 {
-
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'post_tag';
     }
 
-    /**
-     * {@inheritdoc}
-     * @return PostTagQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PostTagQuery(get_called_class());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -60,9 +43,6 @@ class PostTag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -71,21 +51,11 @@ class PostTag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Post]].
-     *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-     */
     public function getPost()
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
     }
 
-    /**
-     * Gets query for [[Tag]].
-     *
-     * @return \yii\db\ActiveQuery|TagQuery
-     */
     public function getTag()
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);
