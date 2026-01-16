@@ -25,7 +25,7 @@ class PostController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -82,7 +82,7 @@ class PostController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->tagIds = \yii\helpers\ArrayHelper::getColumn($model->tags, 'id');
+        $model->tagIds = ArrayHelper::getColumn($model->tags, 'id');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
