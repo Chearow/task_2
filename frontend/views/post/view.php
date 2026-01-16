@@ -19,7 +19,7 @@ endif; ?>
 
 <p><?= $post->content ?></p>
 
-<p><strong>Категория:</strong> <?= $post->category->name ?? 'Без категории'?></p>
+<p><strong>Категория:</strong> <?= $post->category->name ?? 'Без категории' ?></p>
 
 <p><strong>Теги:</strong>
     <?php
